@@ -1,29 +1,26 @@
 import dbConnect from "@/lib/mongodb";
 import Post from "@/models/Post";
 
-export async function GET(req) {
-  try {
-    await dbConnect();
+export default async function handler(req, res) {
+  await dbConnect();
 
-    const { searchParams } = new URL(req.url);
-    const userId = searchParams.get("userId");
+  const { id } = req.query;
 
-    const filter = userId ? { user: userId } : {};
+  if (req.method === "GET") {
+    try {
+      const post = await Post.findByIdAndUpdate(
+        id,
+        { $inc: { views: 1 } },
+        { new: true }
+      ).populate("user", "username profilePhoto");
 
-    const posts = await Post.find(filter).sort({
-      createdAt: -1,
-    });
+      if (!post) return res.status(404).json({ error: "Post not found" });
 
-    return new Response(JSON.stringify(posts), {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  } catch (err) {
-    return new Response(
-      JSON.stringify({ error: "Failed" }),
-      { status: 500 }
-    );
+      return res.status(200).json(post);
+    } catch (err) {
+      return res.status(500).json({ error: "Failed to fetch post" });
+    }
   }
+
+  return res.status(405).json({ error: "Method not allowed" });
 }

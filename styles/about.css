@@ -12,30 +12,75 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
-    min-height: 100vh; /* scroll için değiştirildi */
+    min-height: 100vh;
     background: url("../public/images/Singularity Blues.gif") center/cover no-repeat;
-    background-attachment: fixed; /* arkaplan sabit */
+    background-attachment: fixed;
     box-shadow: inset 0 0 15000px #000;
 }
 
+/* overlay */
 .background-layer-about {
     display: flex;
     flex-direction: column;
     width: 100%;
-    min-height: 100vh; /* scroll uyumu */
-    background-color: rgba(0, 0, 0, 0.8); /* opacity yerine */
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
     color: #fff;
+
+    padding: 40px 20px;
+    box-sizing: border-box;
 }
 
+/* TITLE */
 .background-layer-about h1 {
-    margin: 50px auto;
+    margin: 50px auto 20px;
     font-family: "BBH Bartle", sans-serif;
     text-align: center;
+    font-size: clamp(22px, 4vw, 42px);
 }
 
+/* TEXT */
 .background-layer-about p {
     margin: 10px auto;
     text-align: center;
     width: 50%;
     font-family: "Google Sans Code", monospace;
+    font-size: clamp(14px, 2vw, 18px);
+    line-height: 1.6;
+}
+
+/* ================= RESPONSIVE BREAKPOINTS ================= */
+
+/* tablet */
+@media (max-width: 1024px) {
+    .background-layer-about p {
+        width: 70%;
+    }
+}
+
+/* mobile */
+@media (max-width: 768px) {
+    .background-layer-about {
+        padding: 30px 15px;
+    }
+
+    .background-layer-about p {
+        width: 90%;
+    }
+
+    .background-layer-about h1 {
+        margin: 30px auto 15px;
+    }
+}
+
+/* small mobile */
+@media (max-width: 480px) {
+    .background-layer-about p {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .background-layer-about h1 {
+        font-size: 20px;
+    }
 }

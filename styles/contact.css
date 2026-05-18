@@ -3,166 +3,145 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 body {
-    background-color: #111;
+  background-color: #111;
+  margin: 0;
 }
 
-/* === GENEL === */
+/* === BACKGROUND === */
 .background-support {
-    display: flex;
-    width: 100%;
-    height: 100vh;
-    background: url("../public/images/8Bit\ _\ Pixel\ _\ Danger.gif") center/cover no-repeat;
-    box-shadow: inset 0 0 15000px #000;
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: url("../public/images/8Bit _ Pixel _ Danger.gif") center/cover no-repeat;
+  box-shadow: inset 0 0 15000px #000;
 }
 
 .background-layer {
-    display: flex;
-    width: 100%;
-    height: 100vh;
-    background-color: #000;
-    opacity: 0.8;
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: #000;
+  opacity: 0.8;
 }
 
+/* === MAIN LAYOUT === */
 .support-layers {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin: 70px 0;
-    width: 100%;
-    height: 70vh;
-    gap: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 20px;
+  padding: 40px 20px;
+  box-sizing: border-box;
 }
 
-/* === SOL TARAF === */
+/* === LEFT === */
 .layer-left {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40%;
-    height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
 }
+
 .layer-left p {
-    font-family: "Yuji Hentaigana Akari", cursive;
-    color: white;
-    z-index: 10;
-    text-align: start;
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    line-height: 2.5rem;
-    margin: 10px auto;
+  font-family: "Yuji Hentaigana Akari", cursive;
+  color: white;
+  z-index: 10;
+  text-align: start;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  line-height: 2.5rem;
+  margin: 0;
 }
 
-/* === SAĞ TARAF === */
+/* === RIGHT === */
 .layer-right {
-    display: flex;
-    flex-direction: column;
-    width: 60%;
-    height: 70vh;
-    color: #fff;
-    padding: 100px 60px;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  color: #fff;
+  padding: clamp(20px, 5vw, 100px) clamp(20px, 4vw, 60px);
+  box-sizing: border-box;
 }
+
 .layer-right h3 {
-    font-family: "Schibsted Grotesk", sans-serif;
-    font-weight: 900;
-    font-size: 40px;
-    margin-bottom: 50px;
+  font-family: "Schibsted Grotesk", sans-serif;
+  font-weight: 900;
+  font-size: clamp(22px, 3vw, 40px);
+  margin-bottom: clamp(20px, 6vw, 50px);
 }
+
 .layer-right p {
-    font-family: "IBM Plex Mono", monospace;
-    font-style: normal;
-    font-weight: 600;
-    margin-bottom: 20px;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
+
 .layer-right p span {
-    color: rgb(255, 0, 0);
-    font-weight: 400;
-    text-decoration: underline;
-}
-.layer-right p span:hover {
-    cursor: pointer;
+  color: rgb(255, 0, 0);
+  font-weight: 400;
+  text-decoration: underline;
 }
 
-/* === RESPONSIVE === */
-
-/* Tablet (max 1024px) */
+/* === TABLET === */
 @media (max-width: 1024px) {
-    .support-layers {
-        flex-direction: column;
-        height: auto;
-        margin: 40px 0;
-    }
+  .support-layers {
+    flex-direction: column;
+    height: auto;
+  }
 
-    .layer-left,
-    .layer-right {
-        width: 90%;
-        height: auto;
-    }
+  .layer-left,
+  .layer-right {
+    width: 100%;
+  }
 
-    .layer-right h3 {
-        font-size: 32px;
-        margin-bottom: 130px;
-        text-align: center;
-    }
-
-    .layer-left p {
-        line-height: 2rem;
-    }
+  .layer-left p {
+    line-height: 2rem;
+  }
 }
 
-/* Mobil (max 768px) */
+/* === MOBILE === */
 @media (max-width: 768px) {
-    .background-support {
-        height: auto;
-        min-height: 100vh;
-    }
+  .support-layers {
+    flex-direction: column-reverse;
+    gap: 15px;
+  }
 
-    .support-layers {
-        flex-direction: column-reverse;
-    }
+  .layer-left {
+    justify-content: flex-start;
+  }
 
-    .layer-left {
-        width: 100%;
-        height: auto;
-        align-items: flex-start;
-    }
+  .layer-left p {
+    font-size: 16px;
+    line-height: 1.8rem;
+  }
 
-    .layer-left p {
-        font-size: 18px;
-        line-height: 1.8rem;
-        writing-mode: vertical-rl;
-        text-orientation: upright;
-    }
+  .layer-right {
+    text-align: center;
+    padding: 20px;
+  }
 
-    .layer-right {
-        width: 100%;
-        text-align: center;
-        padding: 10px 20px;
-    }
-
-    .layer-right h3 {
-        font-size: 26px;
-    }
-
-    .layer-right p {
-        font-size: 14px;
-        line-height: 1.6rem;
-    }
+  .layer-right p {
+    font-size: 14px;
+    line-height: 1.6rem;
+  }
 }
 
-/* Küçük mobil (max 480px) */
+/* === SMALL MOBILE === */
 @media (max-width: 480px) {
-    .layer-right h3 {
-        font-size: 22px;
-    }
+  .layer-left p {
+    font-size: 14px;
+    line-height: 1.6rem;
+  }
 
-    .layer-right p {
-        font-size: 13px;
-    }
+  .layer-right h3 {
+    font-size: 20px;
+  }
 
-    .layer-left p {
-        font-size: 16px;
-        line-height: 1.6rem;
-    }
+  .layer-right p {
+    font-size: 13px;
+  }
 }

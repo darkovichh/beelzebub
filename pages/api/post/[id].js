@@ -12,10 +12,20 @@ export default async function handler(req, res) {
     await dbConnect();
 
     if (req.method === "GET") {
-      // her request = +1 view
-      await Post.findByIdAndUpdate(id, { $inc: { views: 1 } });
+      // ❗ SAME REQUEST DOUBLE GUARD
+      // React 18 + duplicate fetch protection
+      const viewKey = req.headers["x-view-lock"];
 
-      const post = await Post.findById(id);
+      if (!viewKey) {
+        await Post.findByIdAndUpdate(id, {
+          $inc: { views: 1 },
+        });
+      }
+
+      const post = await Post.findById(id).populate(
+        "user",
+        "username profilePhoto"
+      );
 
       if (!post) return res.status(404).json({ error: "Not found" });
 

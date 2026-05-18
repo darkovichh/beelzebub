@@ -1,70 +1,137 @@
 .user-post {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    min-height: 100vh;
-    background-color: #000;
-    color: #fff;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000;
+  color: #fff;
 }
 
+/* HEADER BACKGROUND */
 .post-title {
-    display: flex;
-    width: 100%;
-    min-height: 35vh; /* ❌ height → ✅ min-height */
-    background-image: url("../public/images//indir (19).jpeg");
-    background-size: cover;
-    background-position: center;
+  display: flex;
+  width: 100%;
+  min-height: 35vh;
+  background-image: url("../public/images//indir (19).jpeg");
+  background-size: cover;
+  background-position: center;
 }
 
+/* OVERLAY */
 .post-title-shadow {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    min-height: 35vh; /* ❌ height → ✅ min-height */
-    height: auto; /* ✅ içerik kadar büyür */
-    padding: 50px 0;
-    background-color: rgba(0, 0, 0, 0.90);
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 35vh;
+  padding: 50px 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  box-sizing: border-box;
+  align-items: center;
 }
 
+/* PROFILE IMAGE */
 .user-pfp {
-    width: 150px;
-    height: 150px;
-    border-radius: 5px;
-    border: 2px solid #111;
+  width: 150px;
+  height: 150px;
+  border-radius: 8px;
+  border: 2px solid #111;
 
-    /* ❌ margin: auto 20px auto 500px; */
-    margin-left: 50px; 
+  margin-left: 50px;
 
-    /* background-color: #000; */
-    background-size: cover;
-    background-position: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
 }
 
+/* DESCRIPTION AREA */
 .user-post-desc {
-    width: 800px;
-    max-width: 100%; /* ✅ taşma fix */
-    min-height: 150px;
+  width: min(800px, 100%);
+  min-height: 150px;
 
-    margin: 0 20px;
+  margin: 0 20px;
 
-    min-width: 0; /* flex fix */
+  min-width: 0;
+  flex: 1;
 }
 
 .user-post-desc h1 {
-    font-family: "BBH Bartle", sans-serif;
-    margin: 20px 0 0 0;
+  font-family: "BBH Bartle", sans-serif;
+  margin: 20px 0 0 0;
 }
 
 .user-post-desc h2 {
-    font-family: "Google Sans Code", monospace;
-    margin: 10px 0 0 0;
-    font-style: italic;
+  font-family: "Google Sans Code", monospace;
+  margin: 10px 0 0 0;
+  font-style: italic;
 }
 
 .user-post-desc p {
-    font-family: "Google Sans Code", monospace;
-    margin: 7px 0 0 0;
+  font-family: "Google Sans Code", monospace;
+  margin: 7px 0 0 0;
 
-    word-break: break-word;
-    white-space: pre-wrap;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+
+@media (max-width: 1024px) {
+  .post-title-shadow {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px 20px;
+  }
+
+  .user-pfp {
+    margin-left: 0;
+    width: 140px;
+    height: 140px;
+  }
+
+  .user-post-desc {
+    margin: 20px 0 0 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .user-pfp {
+    width: 120px;
+    height: 120px;
+  }
+
+  .user-post-desc h1 {
+    font-size: 22px;
+  }
+
+  .user-post-desc h2 {
+    font-size: 14px;
+  }
+
+  .user-post-desc p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .post-title-shadow {
+    padding: 20px 10px;
+  }
+
+  .user-pfp {
+    width: 100px;
+    height: 100px;
+  }
+
+  .user-post-desc h1 {
+    font-size: 18px;
+  }
+
+  .user-post-desc h2 {
+    font-size: 13px;
+  }
+
+  .user-post-desc p {
+    font-size: 12px;
+  }
 }

@@ -15,6 +15,7 @@ export default function UserPost() {
   const [loading, setLoading] = useState(true);
 
   const socketRef = useRef(null);
+  const viewSent = useRef(false); // 🔥 GLOBAL GUARD
 
   const defaultPfp = "/images/default pfp.jpeg";
 
@@ -40,27 +41,42 @@ export default function UserPost() {
     return () => socketRef.current?.disconnect();
   }, [id]);
 
-  // FETCH
+  // FETCH + VIEW (FIXED)
   useEffect(() => {
     if (!id) return;
+    if (viewSent.current) return; // 🔥 block duplicate runs
 
-    const fetchPost = async () => {
-      const res = await fetch(`/api/posts/${id}`);
-      const data = await res.json();
-      setPostData(data);
+    viewSent.current = true;
+
+    const load = async () => {
+      try {
+        // POST GET
+        const res = await fetch(`/api/posts/${id}`);
+        const data = await res.json();
+
+        setPostData(data);
+
+        // COMMENTS
+        const cRes = await fetch(`/api/comments?postId=${id}`);
+        const cData = await cRes.json();
+        setComments(cData);
+
+        setLoading(false);
+
+        // VIEW +1 ONLY ONCE
+        await fetch(`/api/posts/${id}`, {
+          method: "PATCH",
+        });
+
+      } catch (err) {
+        console.log(err);
+      }
     };
 
-    const fetchComments = async () => {
-      const res = await fetch(`/api/comments?postId=${id}`);
-      const data = await res.json();
-      setComments(data);
-      setLoading(false);
-    };
-
-    fetchPost();
-    fetchComments();
+    load();
   }, [id]);
 
+  // COMMENT
   const handleComment = async () => {
     if (!comment.trim()) return;
 
@@ -94,11 +110,9 @@ export default function UserPost() {
 
       <div className="user-post">
 
-        {/* POST HEADER */}
         <div className="post-title">
           <div className="post-title-shadow">
 
-            {/* 🔥 POST OWNER PFP FIX */}
             <div
               className="user-pfp"
               style={{
@@ -139,9 +153,7 @@ export default function UserPost() {
           </div>
         </div>
 
-        {/* COMMENT INPUT */}
         <div className="post-comment">
-
           <div
             className="comment-pfp"
             style={{
@@ -159,11 +171,8 @@ export default function UserPost() {
           </div>
         </div>
 
-        {/* COMMENTS */}
         {comments.map((c) => (
           <div className="post-comment" key={c._id}>
-
-            {/* 🔥 COMMENT USER PFP FIX */}
             <div
               className="comment-pfp"
               style={{
@@ -177,7 +186,6 @@ export default function UserPost() {
 
             <div className="comment-box">
               <div className="comment-title">
-
                 <h5
                   style={{ cursor: "pointer" }}
                   onClick={() =>
@@ -187,19 +195,14 @@ export default function UserPost() {
                   @{c.user?.username || "Unknown"}
                 </h5>
 
-                <p>
-                  {new Date(c.createdAt).toLocaleString()}
-                </p>
-
+                <p>{new Date(c.createdAt).toLocaleString()}</p>
               </div>
 
               <div className="comment-line" />
               <p>{c.text}</p>
             </div>
-
           </div>
         ))}
-
       </div>
     </>
   );

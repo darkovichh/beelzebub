@@ -1,8 +1,8 @@
 "use client";
 
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
+import { useRouter } from "next/router";
 
 export default function UserProfile() {
   const router = useRouter();
@@ -10,12 +10,12 @@ export default function UserProfile() {
 
   const [userData, setUserData] = useState({
     username: "unknown",
-    rating: 0,
     bio: "",
-    views: 0,
-    comments: 0,
     profilePhoto: "/default-avatar.png",
     banner: "/default-banner.png",
+    views: 0,
+    comments: 0,
+    rating: 0,
   });
 
   const [posts, setPosts] = useState([]);
@@ -25,33 +25,55 @@ export default function UserProfile() {
       try {
         if (!username) return;
 
+        // USER
         const userRes = await fetch(`/api/users/${username}`);
         const user = await userRes.json();
 
         if (!userRes.ok) return;
 
-        setUserData({
-          _id: user._id,
-          username: user.username || "unknown",
-          rating: user.rating || 0,
-          bio: user.bio || "",
-          views: user.views || 0,
-          comments: user.comments || 0,
-          profilePhoto: user.profilePhoto || "/default-avatar.png",
-          banner: user.banner || "/default-banner.png",
-        });
+        // POSTS
+        let postsData = [];
 
         if (user._id) {
           const postsRes = await fetch(
             `/api/posts?userId=${user._id}`
           );
 
-          const postsData = await postsRes.json();
-
-          if (Array.isArray(postsData)) {
-            setPosts(postsData);
-          }
+          postsData = await postsRes.json();
         }
+
+        if (!Array.isArray(postsData)) postsData = [];
+
+        // TOTAL CALC
+        const totalViews = postsData.reduce(
+          (sum, p) => sum + (p.views || 0),
+          0
+        );
+
+        const totalComments = postsData.reduce(
+          (sum, p) => sum + (p.commentCount || 0),
+          0
+        );
+
+        const postCount = postsData.length;
+
+        const rating =
+          totalViews + totalComments + postCount;
+
+        setPosts(postsData);
+
+        setUserData({
+          _id: user._id,
+          username: user.username || "unknown",
+          bio: user.bio || "",
+          profilePhoto:
+            user.profilePhoto || "/default-avatar.png",
+          banner: user.banner || "/default-banner.png",
+
+          views: totalViews,
+          comments: totalComments,
+          rating,
+        });
       } catch (err) {
         console.log(err);
       }
@@ -87,10 +109,12 @@ export default function UserProfile() {
 
             <div className="profile-user-desc">
               <h1>@{userData.username}</h1>
+
+              {/* rating üstdə qalır */}
               <p>rating: {userData.rating}</p>
 
               <p>
-                {userData.bio && userData.bio.trim().length > 0
+                {userData.bio?.trim()
                   ? userData.bio
                   : "No bio yet.."}
               </p>
@@ -132,7 +156,9 @@ export default function UserProfile() {
 
                   <p>
                     {post.createdAt
-                      ? new Date(post.createdAt).toLocaleString()
+                      ? new Date(
+                          post.createdAt
+                        ).toLocaleString()
                       : ""}
                   </p>
                 </div>

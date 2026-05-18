@@ -17,12 +17,12 @@ export default async function handler(req, res) {
 
       const populated = await comment.populate("user");
 
-      // 🔥 UPDATE POST COUNT
+      // 🔥 POST COUNT UPDATE
       await Post.findByIdAndUpdate(postId, {
         $inc: { commentCount: 1 },
       });
 
-      // 🔥 REAL SOCKET BROADCAST (CRITICAL FIX)
+      // socket OK
       if (req.socket.server.io) {
         req.socket.server.io.emit("newComment", {
           postId,
@@ -32,19 +32,25 @@ export default async function handler(req, res) {
 
       return res.status(201).json(populated);
     } catch (err) {
-      return res.status(500).json({ error: err.message });
+      return res.status(500).json({
+        error: err.message,
+      });
     }
   }
 
   if (req.method === "GET") {
     const { postId } = req.query;
 
-    const comments = await Comment.find({ post: postId })
+    const comments = await Comment.find({
+      post: postId,
+    })
       .populate("user")
       .sort({ createdAt: -1 });
 
     return res.status(200).json(comments);
   }
 
-  return res.status(405).json({ error: "Method not allowed" });
+  return res.status(405).json({
+    error: "Method not allowed",
+  });
 }

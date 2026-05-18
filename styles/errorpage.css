@@ -1,73 +1,92 @@
 .error-main {
-    display: flex;
-    width: 100%;
-    height: 100vh;
-    background-color: #020202;
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: #020202;
 }
 
 .error-back {
-    display: flex;
-    width: 100%;
-    height: 100vh;
-    background: url("../public/images/404-1.gif") center/cover no-repeat;
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: url("../public/images/404-1.gif") center/cover no-repeat;
 }
 
 .error-black-back {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100vh;
-    background: rgb(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: rgba(0, 0, 0, 0.9);
+
+  color: #fff;
+  text-align: center;
+  box-sizing: border-box;
 }
 
-/* ----------------------------------------------------------------------------- */
-
-.error-black-back {
-    color: #fff;
-    text-align: center;
-}
-
-.error-black-back H1 {
-    font-size: 100px;
-    font-weight: 100;
-    font-style: normal;
-    font-family: "BBH Bartle", sans-serif;
-    margin: 200px 0 50px 0;
+/* TEXT */
+.error-black-back h1 {
+  font-size: clamp(48px, 10vw, 100px);
+  font-weight: 100;
+  font-family: "BBH Bartle", sans-serif;
+  margin: clamp(80px, 15vh, 200px) 0 30px 0;
 }
 
 .error-black-back p {
-    margin: 5px 0;
-    font-family: "Google Sans Code", monospace;
+  margin: 5px 0;
+  font-family: "Google Sans Code", monospace;
+  font-size: clamp(13px, 2vw, 16px);
 }
 
 .error-color {
-    color: rgb(255, 0, 64);
+  color: rgb(255, 0, 64);
 }
 
-/* ----------------------------------------------------------------------------- */
-
+/* BUTTON */
 .back-to-home {
-    display: flex;
-    width: 150px;
-    height: 50px;
-    margin: 100px auto;
-    background-color: #fff;
-    color: #020202;
-    font-family: "Google Sans Code", monospace;
-    font-weight: bold;
-    font-style: normal;
-    border-radius: 10px;
-    border: rgb(27, 27, 27) solid 2px;
-    transition: 0.5s;
+  display: flex;
+  width: 150px;
+  height: 50px;
+  margin: clamp(40px, 10vh, 100px) auto;
+  background-color: #fff;
+  color: #020202;
+  font-family: "Google Sans Code", monospace;
+  font-weight: bold;
+  border-radius: 10px;
+  border: rgb(27, 27, 27) solid 2px;
+  transition: 0.3s;
+  cursor: pointer;
 }
 
 .back-to-home:hover {
-    background-color: rgb(173, 16, 55);
-    color: #fff;
-    border: rgb(63, 0, 16) solid 2px;
-    transform: translateY(-10px);
+  background-color: rgb(173, 16, 55);
+  color: #fff;
+  border: rgb(63, 0, 16) solid 2px;
+  transform: translateY(-6px);
 }
 
 .back-to-home p {
-    margin: auto;
+  margin: auto;
+}
+
+/* TABLET */
+@media (max-width: 768px) {
+  .error-black-back h1 {
+    margin: 120px 0 25px 0;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+  .error-black-back h1 {
+    margin: 80px 0 20px 0;
+  }
+
+  .back-to-home {
+    width: 130px;
+    height: 45px;
+  }
 }
