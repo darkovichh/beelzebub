@@ -7,15 +7,13 @@
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
     "lint": "eslint"
-    
-    
   },
   "dependencies": {
     "aos": "^2.3.4",
     "bcryptjs": "^3.0.3",
     "formidable": "^3.5.4",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.2.1",
+    "mongoose": "^9.6.2",
     "multiparty": "^4.2.3",
     "next": "16.1.6",
     "react": "19.2.3",
@@ -29,5 +27,4 @@
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4"
   }
-  
 }
