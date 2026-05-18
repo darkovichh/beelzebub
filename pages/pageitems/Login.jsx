@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/router";
-import Navbar from "../../components/Navbar";
+import { useRouter } from "next/navigation";
+import Navbar from "@/components/Navbar";
 
 export default function Login() {
   const router = useRouter();
@@ -12,33 +12,63 @@ export default function Login() {
     e.preventDefault();
     setError("");
 
-    const identifier = e.target.identifier.value.trim(); // username veya email
-    const password = e.target.password.value;
+    const username = e.target.username.value.trim();
+    const password = e.target.password.value.trim();
 
-    const res = await fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ identifier, password }),
-    });
+    if (!username || !password) {
+      setError("Username ve password gerekli");
+      return;
+    }
 
-    const data = await res.json();
-    if (!res.ok) return setError(data.message);
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
 
-    localStorage.setItem("user", JSON.stringify(data.user));
-    router.push("/"); // login sonrası anasayfa
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Login failed");
+        return;
+      }
+
+      // localStorage minimal (auth only)
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          _id: data._id,
+          username: data.username,
+        })
+      );
+
+      // 🔥 IMPORTANT FIX: dynamic profile route
+      router.replace(`/user/${data.username}`);
+
+    } catch (err) {
+      console.error(err);
+      setError("Server error");
+    }
   };
 
   return (
     <>
       <Navbar />
+
       <div className="auth-container">
-        <form className="auth-box" onSubmit={handleSubmit}>
-          <h2>Login</h2>
-          {error && <p className="error">{error}</p>}
-          <input name="identifier" placeholder="Email or Username" required />
-          <input name="password" type="password" placeholder="Password" required />
-          <button type="submit">Login</button>
-        </form>
+        <div className="auth-container-shadow">
+          <form className="auth-box" onSubmit={handleSubmit}>
+            <h2>Login</h2>
+
+            {error && <p className="error">{error}</p>}
+
+            <input name="username" placeholder="Username" required />
+            <input name="password" type="password" placeholder="Password" required />
+
+            <button type="submit">Login</button>
+          </form>
+        </div>
       </div>
     </>
   );

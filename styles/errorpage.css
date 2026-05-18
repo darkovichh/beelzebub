@@ -1,0 +1,73 @@
+.error-main {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-color: #020202;
+}
+
+.error-back {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background: url("../public/images/404-1.gif") center/cover no-repeat;
+}
+
+.error-black-back {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    background: rgb(0, 0, 0, 0.9);
+}
+
+/* ----------------------------------------------------------------------------- */
+
+.error-black-back {
+    color: #fff;
+    text-align: center;
+}
+
+.error-black-back H1 {
+    font-size: 100px;
+    font-weight: 100;
+    font-style: normal;
+    font-family: "BBH Bartle", sans-serif;
+    margin: 200px 0 50px 0;
+}
+
+.error-black-back p {
+    margin: 5px 0;
+    font-family: "Google Sans Code", monospace;
+}
+
+.error-color {
+    color: rgb(255, 0, 64);
+}
+
+/* ----------------------------------------------------------------------------- */
+
+.back-to-home {
+    display: flex;
+    width: 150px;
+    height: 50px;
+    margin: 100px auto;
+    background-color: #fff;
+    color: #020202;
+    font-family: "Google Sans Code", monospace;
+    font-weight: bold;
+    font-style: normal;
+    border-radius: 10px;
+    border: rgb(27, 27, 27) solid 2px;
+    transition: 0.5s;
+}
+
+.back-to-home:hover {
+    background-color: rgb(173, 16, 55);
+    color: #fff;
+    border: rgb(63, 0, 16) solid 2px;
+    transform: translateY(-10px);
+}
+
+.back-to-home p {
+    margin: auto;
+}

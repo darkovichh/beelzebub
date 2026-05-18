@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/router";
-import Navbar from "../../components/Navbar";
+import Navbar from "@/components/Navbar";
 
 export default function Register() {
   const router = useRouter();
@@ -22,31 +22,38 @@ export default function Register() {
       return;
     }
 
-    const res = await fetch("/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
-    });
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password }),
+      });
 
-    const data = await res.json();
-    if (!res.ok) return setError(data.message);
+      const data = await res.json();
+      if (!res.ok) return setError(data.error || "Registration failed");
 
-    router.push("/pageitems/Login"); // otomatik login sayfasına yönlendir
+      router.push("/pageitems/Login"); // register sonrası login sayfasına yönlendir
+    } catch (err) {
+      console.error(err);
+      setError("Server error");
+    }
   };
 
   return (
     <>
       <Navbar />
       <div className="auth-container">
-        <form className="auth-box" onSubmit={handleSubmit}>
-          <h2>Register</h2>
-          {error && <p className="error">{error}</p>}
-          <input name="username" placeholder="Username" required />
-          <input name="email" type="email" placeholder="Email" required />
-          <input name="password" type="password" placeholder="Password" required />
-          <input name="confirmPassword" type="password" placeholder="Confirm Password" required />
-          <button type="submit">Create Account</button>
-        </form>
+        <div className="auth-container-shadow">
+          <form className="auth-box" onSubmit={handleSubmit}>
+            <h2>Register</h2>
+            {error && <p className="error">{error}</p>}
+            <input name="username" placeholder="Username" required />
+            <input name="email" type="email" placeholder="Email" required />
+            <input name="password" type="password" placeholder="Password" required />
+            <input name="confirmPassword" type="password" placeholder="Confirm Password" required />
+            <button type="submit">Create Account</button>
+          </form>
+        </div>
       </div>
     </>
   );

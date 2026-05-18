@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Yuji+Hentaigana+Akari&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+body {
+    background-color: #111;
+    margin: 0;
+}
+
+/* === GENEL === */
+.background-about {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh; /* scroll için değiştirildi */
+    background: url("../public/images/Singularity Blues.gif") center/cover no-repeat;
+    background-attachment: fixed; /* arkaplan sabit */
+    box-shadow: inset 0 0 15000px #000;
+}
+
+.background-layer-about {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh; /* scroll uyumu */
+    background-color: rgba(0, 0, 0, 0.8); /* opacity yerine */
+    color: #fff;
+}
+
+.background-layer-about h1 {
+    margin: 50px auto;
+    font-family: "BBH Bartle", sans-serif;
+    text-align: center;
+}
+
+.background-layer-about p {
+    margin: 10px auto;
+    text-align: center;
+    width: 50%;
+    font-family: "Google Sans Code", monospace;
+}

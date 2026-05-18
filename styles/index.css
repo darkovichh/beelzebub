@@ -2,7 +2,6 @@
     display: flex;
     max-width: 100%;
     min-height: 100vh;
-    background: url('/images/back1.gif') center/cover no-repeat;
     box-shadow: inset 0 0 15000px #000;
 }
 
@@ -18,32 +17,115 @@
     flex-direction: row;
     width: 95%;
     min-height: 100vh;
+    margin: auto;
 }
 
 /* ------------------------------------ */
+/* posts */
 
-/* chat */
+.posts {
+    display: flex;
+    flex-direction: column;
+    margin: 50px auto;
+    width: 65%;
+    border: 2px #111 solid;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* 🔴 BURASI DÜZELTİLDİ (6 kolon) */
+.post-detail, .post-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 100px 150px 80px 90px; 
+    /* user, title, category, date, views, comments */
+    align-items: center;
+    padding: 10px 30px;
+    font-family: "Google Sans Code", monospace;
+}
+
+.post-detail {
+    font-weight: 600;
+    color: #fff;
+    background-color: #111;
+}
+
+.post-row {
+    color: #fff;
+    border-bottom: 1px solid #333;
+    transition: background 0.2s;
+}
+
+.post-row:hover {
+    background-color: #222;
+}
+
+/* user */
+.post-row li:first-child {
+    display: flex;
+    align-items: center;
+    color: #20c048;
+    font-weight: 700;
+}
+
+/* title */
+.post-row li:nth-child(2) {
+    font-size: 1.05em;
+    font-weight: 600;
+}
+
+/* category */
+.post-row li:nth-child(3) {
+    color: #ff470f;
+    text-transform: capitalize;
+}
+
+/* date, views, comments */
+.post-row li:nth-child(4),
+.post-row li:nth-child(5),
+.post-row li:nth-child(6) {
+    font-size: 0.9em;
+    color: #aaa;
+}
+
+/* ul fix */
+.post-detail ul,
+.post-row ul {
+    display: contents;
+    padding: 0;
+    margin: 0;
+}
+
+.post-detail ul li,
+.post-row ul li {
+    list-style: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ------------------------------------ */
+/* chat (dokunulmadı) */
 
 .chat {
     display: flex;
     flex-direction: column;
     width: 30%;
     height: 85vh;
-    margin: 100px auto;
+    margin: 50px auto;
     background-color: #010101;
-    border: 2px solid rgb(128, 18, 60);
+    border: 2px #111 solid;
     border-radius: 10px;
-    box-shadow: 0 0 100px 0 rgb(37, 2, 16);
     padding: 20px;
     color: #fff;
     font-family: "Segoe UI", sans-serif;
 }
 
 .chat h2 {
+    font-family: "Google Sans Code", monospace;
+    font-weight: 400;
     text-align: center;
     margin-bottom: 20px;
-    color: rgb(255, 50, 150);
-    text-shadow: 0 0 10px rgb(255, 50, 150);
+    color: #fff;
 }
 
 .chat-messages {
@@ -57,8 +139,6 @@
 }
 
 .chat-message {
-    background-color: #1a1a1a;
-    border: 1px solid rgb(128, 18, 60);
     border-radius: 8px;
     padding: 10px;
     animation: fadeIn 0.2s ease-in;
@@ -69,7 +149,7 @@
     justify-content: space-between;
     margin-bottom: 5px;
     font-size: 0.85rem;
-    color: #ff3399;
+    color: #575757;
 }
 
 .chat-username {
@@ -84,6 +164,11 @@
 .chat-text {
     font-size: 0.9rem;
     line-height: 1.2rem;
+    font-weight: 600;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 80%;
+    white-space: pre-wrap;
 }
 
 .chat-input {
@@ -95,7 +180,7 @@
     flex: 1;
     padding: 10px;
     border-radius: 8px;
-    border: 1px solid rgb(128, 18, 60);
+    border: 2px solid #222;
     background-color: #0d0d0d;
     color: #fff;
     outline: none;
@@ -109,14 +194,15 @@
     padding: 10px 20px;
     border: none;
     border-radius: 8px;
-    background-color: rgb(128, 18, 60);
+    background-color: #222;
     color: #fff;
     cursor: pointer;
     transition: 0.2s;
+    font-weight: 600;
 }
 
 .chat-input button:hover {
-    background-color: rgb(200, 40, 100);
+    background-color: rgb(16, 148, 67);
 }
 
 @keyframes fadeIn {
@@ -124,7 +210,7 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Responsive */
+/* responsive */
 @media (max-width: 768px) {
     .chat {
         width: 90%;
@@ -133,12 +219,27 @@
     }
 }
 
-
 /* ------------------------------------ */
+/* user */
 
-/* post */
-
-.posts {
+.post-user {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.post-user-pfp {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+    border: 1px solid #333;
+}
+
+.post-user span {
+    color: #20c048;
+    font-weight: 700;
+    font-size: 0.95rem;
 }

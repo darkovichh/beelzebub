@@ -11,8 +11,10 @@
   "dependencies": {
     "aos": "^2.3.4",
     "bcryptjs": "^3.0.3",
+    "formidable": "^3.5.4",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.2.1",
+    "multiparty": "^4.2.3",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",

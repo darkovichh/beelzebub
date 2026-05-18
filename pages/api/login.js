@@ -1,27 +1,35 @@
-import dbConnect from "../../lib/mongodb";
-import User from "../../models/User";
+import dbConnect from "@/lib/mongodb";
+import User from "@/models/User";
+import bcrypt from "bcryptjs";
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).json({ message: "Method not allowed" });
-
   await dbConnect();
 
-  const { identifier, password } = req.body;
-
-  if (!identifier || !password) return res.status(400).json({ message: "All fields are required" });
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
 
   try {
-    const user = await User.findOne({ $or: [{ email: identifier }, { username: identifier }] });
+    const { username, password } = req.body;
 
-    if (!user || user.password !== password)
-      return res.status(401).json({ message: "Invalid credentials" });
+    const user = await User.findOne({ username });
 
-    user.loginDates.push(new Date());
-    await user.save();
+    if (!user) {
+      return res.status(400).json({ error: "User not found" });
+    }
 
-    res.status(200).json({ message: "Login successful", user });
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ error: "Wrong password" });
+    }
+
+    return res.status(200).json({
+      _id: user._id.toString(),
+      username: user.username,
+      profilePhoto: user.profilePhoto || "",
+    });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
+    return res.status(500).json({ error: err.message });
   }
 }

@@ -2,7 +2,7 @@
     font-family: "Google Sans Code", monospace;
     font-weight: 500;
     font-style: normal;
-
+    
 }
 
 .navbar-logo {
@@ -15,14 +15,13 @@
 
 hr {
   width: 100%;
-  background: rgb(255, 0, 98);
-  color: rgb(255, 0, 98);
+  border: 1px #111 solid;
+  color: #111;
 }
 
 .navbar {
   background-color: #000;
   color: white;
-  position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
@@ -47,6 +46,7 @@ hr {
 .navbar-menu {
   display: flex;
   list-style: none;
+  transition: all 0.3s ease;
 }
 .navbar-menu li {
   margin-left: 20px;
