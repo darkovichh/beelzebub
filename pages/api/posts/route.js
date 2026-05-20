@@ -1,26 +1,28 @@
 import dbConnect from "@/lib/mongodb";
 import Post from "@/models/Post";
 
-export default async function handler(req, res) {
-  await dbConnect();
+export async function GET() {
+  try {
+    console.log("STEP 1: API HIT");
 
-  const { id } = req.query;
+    await dbConnect();
+    console.log("STEP 2: DB CONNECTED");
 
-  if (req.method === "GET") {
-    try {
-      const post = await Post.findByIdAndUpdate(
-        id,
-        { $inc: { views: 1 } },
-        { new: true }
-      ).populate("user", "username profilePhoto");
+    const posts = await Post.find({}).sort({ createdAt: -1 });
 
-      if (!post) return res.status(404).json({ error: "Post not found" });
+    console.log("STEP 3: POSTS FETCHED");
 
-      return res.status(200).json(post);
-    } catch (err) {
-      return res.status(500).json({ error: "Failed to fetch post" });
-    }
+    return Response.json(posts);
+  } catch (error) {
+    console.error("❌ FULL ERROR:", error);
+
+    return Response.json(
+      {
+        error: "Server crash",
+        message: error.message,
+        stack: error.stack,
+      },
+      { status: 500 }
+    );
   }
-
-  return res.status(405).json({ error: "Method not allowed" });
 }

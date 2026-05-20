@@ -1,13 +1,39 @@
 import mongoose from "mongoose";
 
-const PostSchema = new mongoose.Schema({
-  userId: String,
-  title: String,
-  description: String,
-  category: String,
+const PostSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
 
-  views: { type: Number, default: 0 }
-}, { timestamps: true });
+    title: {
+      type: String,
+      required: true,
+    },
 
-export default mongoose.models.Post ||
-  mongoose.model("Post", PostSchema);
+    content: {
+      type: String,
+      default: "",
+    },
+
+    category: {
+      type: String,
+      default: "general",
+    },
+
+    views: {
+      type: Number,
+      default: 0,
+    },
+
+    commentCount: {
+      type: Number,
+      default: 0,
+    },
+  },
+  { timestamps: true }
+);
+
+export default mongoose.models.Post || mongoose.model("Post", PostSchema);

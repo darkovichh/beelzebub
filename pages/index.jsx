@@ -10,9 +10,20 @@ export default function Home() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await fetch("/api/posts");
-      const data = await res.json();
-      setPosts(data);
+      try {
+        const res = await fetch("/api/posts");
+        const data = await res.json();
+
+        if (Array.isArray(data)) {
+          setPosts(data);
+        } else {
+          console.error("API returned non-array:", data);
+          setPosts([]);
+        }
+      } catch (err) {
+        console.error("Fetch error:", err);
+        setPosts([]);
+      }
     };
 
     fetchPosts();
@@ -26,7 +37,6 @@ export default function Home() {
         <div className="home-shadow">
           <div className="home-main">
 
-            {/* POSTS */}
             <div className="posts">
 
               <div className="post-detail">
@@ -40,44 +50,46 @@ export default function Home() {
                 </ul>
               </div>
 
-              {posts.map((post) => {
-                const date = new Date(post.createdAt).toLocaleDateString(
-                  "tr-TR",
-                  { day: "2-digit", month: "long", year: "numeric" }
-                );
+              {Array.isArray(posts) &&
+                posts.map((post) => {
+                  const date = post.createdAt
+                    ? new Date(post.createdAt).toLocaleDateString("tr-TR", {
+                        day: "2-digit",
+                        month: "long",
+                        year: "numeric",
+                      })
+                    : "-";
 
-                return (
-                  <div key={post._id} className="post-row">
-                    <ul>
+                  return (
+                    <div key={post._id} className="post-row">
+                      <ul>
+                        <li
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            router.push(`/user/${post.user?.username}`);
+                          }}
+                          style={{ cursor: "pointer", color: "#4ea1ff" }}
+                        >
+                          @{post.user?.username || "Unknown"}
+                        </li>
 
-                      <li
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          router.push(`/user/${post.user?.username}`);
-                        }}
-                        style={{ cursor: "pointer", color: "#4ea1ff" }}
-                      >
-                        @{post.user?.username || "Unknown"}
-                      </li>
+                        <li
+                          onClick={() =>
+                            router.push(`/userPost/${post._id}`)
+                          }
+                          style={{ cursor: "pointer", fontWeight: "bold" }}
+                        >
+                          {post.title || "No title"}
+                        </li>
 
-                      <li
-                        onClick={() =>
-                          router.push(`/userPost/${post._id}`)
-                        }
-                        style={{ cursor: "pointer", fontWeight: "bold" }}
-                      >
-                        {post.title}
-                      </li>
-
-                      <li>{post.category}</li>
-                      <li>{date}</li>
-                      <li>{post.views || 0}</li>
-                      <li>{post.commentCount || 0}</li>
-
-                    </ul>
-                  </div>
-                );
-              })}
+                        <li>{post.category || "-"}</li>
+                        <li>{date}</li>
+                        <li>{post.views || 0}</li>
+                        <li>{post.commentCount || 0}</li>
+                      </ul>
+                    </div>
+                  );
+                })}
 
             </div>
 
