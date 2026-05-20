@@ -33,15 +33,16 @@
   min-width: 0;
 }
 
-/* GRID BASE */
+/* DESKTOP GRID */
 .post-detail,
 .post-row {
   display: grid;
-  grid-template-columns: 120px 1fr 100px 150px 80px 90px;
+  grid-template-columns: 120px 1fr 90px 90px 90px 90px;
   align-items: center;
   padding: 10px 20px;
   font-family: "Google Sans Code", monospace;
   min-width: 0;
+  font-size: 0.95rem;
 }
 
 .post-detail {
@@ -96,7 +97,7 @@
 .post-user span {
   color: #20c048;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -117,22 +118,9 @@
   min-width: 0;
 }
 
-.chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.chat-text {
-  word-break: break-word;
-  white-space: pre-wrap;
-  max-width: 100%;
-}
-
 /* ---------------- RESPONSIVE ---------------- */
 
+/* TABLET */
 @media (max-width: 1024px) {
   .home-main {
     flex-direction: column;
@@ -143,36 +131,63 @@
   .chat {
     width: 100%;
     margin: 20px auto;
-    height: auto;
   }
 
   .chat {
     height: 60vh;
   }
-}
 
-@media (max-width: 768px) {
+  /* shrink columns but KEEP all visible */
   .post-detail,
   .post-row {
-    grid-template-columns: 100px 1fr 80px;
-    padding: 10px;
+    grid-template-columns: 100px 1fr 80px 80px 80px 80px;
+    padding: 10px 12px;
+    font-size: 0.85rem;
   }
 
-  .post-detail li:nth-child(n+4),
-  .post-row li:nth-child(n+4) {
-    display: none;
+  .post-user-pfp {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .posts {
+    width: 100%;
+    margin: 15px auto;
+  }
+
+  /* still 4 columns but tighter */
+  .post-detail,
+  .post-row {
+    grid-template-columns: 90px 1fr 70px 70px 70px 70px;
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+
+  .post-user span {
+    font-size: 0.8rem;
   }
 
   .chat {
-    padding: 15px;
     height: 55vh;
+    padding: 15px;
   }
 }
 
+/* SMALL MOBILE */
 @media (max-width: 480px) {
   .post-detail,
   .post-row {
-    grid-template-columns: 90px 1fr;
+    grid-template-columns: 80px 1fr 65px 65px 65px 65px;
+    padding: 6px 8px;
+    font-size: 0.75rem;
+  }
+
+  .post-user-pfp {
+    width: 24px;
+    height: 24px;
   }
 
   .chat {

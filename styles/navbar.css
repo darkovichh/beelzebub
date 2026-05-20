@@ -1,14 +1,24 @@
 .navbar-menu {
-    font-family: "Google Sans Code", monospace;
-    font-weight: 500;
-    font-style: normal;
-    
+  display: flex;
+  list-style: none;
+  align-items: center;
+  gap: 20px;
+  font-family: "Google Sans Code", monospace;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-menu li {
+  display: flex;
+  align-items: center;
+  margin-left: 0;
 }
 
 .navbar-logo {
-    font-family: "BBH Bartle", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+  font-family: "BBH Bartle", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 /* ----- */
@@ -43,14 +53,7 @@ hr {
   font-size: 20px;
   font-weight: bold;
 }
-.navbar-menu {
-  display: flex;
-  list-style: none;
-  transition: all 0.3s ease;
-}
-.navbar-menu li {
-  margin-left: 20px;
-}
+
 .navbar-menu a {
   color: white;
   text-decoration: none;
@@ -58,14 +61,17 @@ hr {
   border-radius: 10px;
   transition: background-color 0.3s;
 }
+
 .navbar-menu a:hover {
   background-color: #111;
 }
+
 .navbar-toggle {
   display: none;
   flex-direction: column;
   cursor: pointer;
 }
+
 .bar {
   width: 25px;
   height: 3px;
@@ -73,6 +79,54 @@ hr {
   margin: 3px 0;
   transition: 0.3s;
 }
+
+/* USER DROPDOWN FIX */
+.user-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.user-wrapper span {
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.user-wrapper span:hover {
+  background-color: #111;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #000;
+  border: 1px solid #222;
+  border-radius: 10px;
+  min-width: 160px;
+  overflow: hidden;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-dropdown a,
+.user-dropdown div {
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.user-dropdown a:hover,
+.user-dropdown div:hover {
+  background: #111;
+}
+
+/* MOBILE */
 @media screen and (max-width: 768px) {
   .navbar-menu {
     position: absolute;
@@ -86,12 +140,15 @@ hr {
     align-items: center;
     transition: left 0.3s;
   }
+
   .navbar-menu.active {
     left: 0;
   }
+
   .navbar-menu li {
     margin: 20px 0;
   }
+
   .navbar-toggle {
     display: flex;
   }

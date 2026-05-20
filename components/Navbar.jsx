@@ -16,6 +16,17 @@ export default function Navbar() {
     if (storedUser) setUser(JSON.parse(storedUser));
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest(".user-wrapper")) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -49,20 +60,24 @@ export default function Navbar() {
             <>
               <li><Link href="/pageitems/Post" onClick={closeMenu}>Post Share</Link></li>
 
-              <li
-                className="user-wrapper"
-                onMouseEnter={() => setDropdownOpen(true)}
-                onMouseLeave={() => setDropdownOpen(false)}
-              >
-                <span>{user.username}</span>
+              <li className="user-wrapper">
+                <span onClick={() => setDropdownOpen(!dropdownOpen)}>
+                  {user.username}
+                </span>
 
                 {dropdownOpen && (
                   <div className="user-dropdown">
-                    <Link href="/user/profile/Profile" onClick={() => setDropdownOpen(false)}>
+                    <Link
+                      href="/user/profile/Profile"
+                      onClick={() => setDropdownOpen(false)}
+                    >
                       Profile
                     </Link>
 
-                    <Link href="/user/settings/Settings" onClick={() => setDropdownOpen(false)}>
+                    <Link
+                      href="/user/settings/Settings"
+                      onClick={() => setDropdownOpen(false)}
+                    >
                       Settings
                     </Link>
 
@@ -76,10 +91,7 @@ export default function Navbar() {
           )}
         </ul>
 
-        <div
-          className="navbar-toggle"
-          onClick={() => setIsOpen(!isOpen)}
-        >
+        <div className="navbar-toggle" onClick={() => setIsOpen(!isOpen)}>
           <span className="bar"></span>
           <span className="bar"></span>
           <span className="bar"></span>
@@ -87,41 +99,6 @@ export default function Navbar() {
       </div>
 
       <hr />
-
-      <style jsx>{`
-        .user-wrapper {
-          position: relative;
-          cursor: pointer;
-        }
-
-        .user-dropdown {
-          position: absolute;
-          top: 100%;
-          right: 0;
-          background: #111;
-          border: 1px solid #333;
-          border-radius: 8px;
-          min-width: 140px;
-          z-index: 999;
-          display: flex;
-          flex-direction: column;
-          overflow: hidden;
-        }
-
-        .user-dropdown a,
-        .user-dropdown div {
-          padding: 10px;
-          cursor: pointer;
-          transition: 0.2s;
-          color: white;
-          text-decoration: none;
-        }
-
-        .user-dropdown a:hover,
-        .user-dropdown div:hover {
-          background: #1f1f1f;
-        }
-      `}</style>
     </nav>
   );
 }
